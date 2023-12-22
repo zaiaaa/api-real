@@ -2,10 +2,11 @@
 const { Router } = require('express')
 const router = Router();
 const atendimentoController = require('../controllers/atendimentoController')
+const middleware = require('../middleware/auth')
 
 //Get post put and delete
 
-router.get("/atendimentos", (req, res) => {
+router.get("/atendimentos", middleware,(req, res) => {
     const listaAtendimentos = atendimentoController.buscar()
     listaAtendimentos
     .then(atendimentos => res.status(200).json(atendimentos))
@@ -40,5 +41,8 @@ router.delete("/atendimento/:id", (req, res) => {
     atendimento.then((resp) => res.status(200).json(resp)).catch((e) => res.status(400).json(e.message))
     //res.send('Chegou aqui excluindo atendimento')
 })
+
+
+
 
 module.exports = router
